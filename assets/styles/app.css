@@ -10,6 +10,7 @@
 
 html {
     scrollbar-gutter: auto !important;
+    overflow-x: hidden;
 }
 
 body {

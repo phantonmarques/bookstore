@@ -10,7 +10,7 @@ function iniciarFlashes() {
             setTimeout(() => elemento.remove(), 200);
         };
 
-        const temporizador = setTimeout(fechar, 8000);
+        const temporizador = setTimeout(fechar, 4000);
 
         elemento.querySelector('[data-flash-close]')
             .addEventListener('click', fechar, { once: true });

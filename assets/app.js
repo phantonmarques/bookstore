@@ -10,3 +10,4 @@ import './styles/components.css';
 import './form.js';
 import './flash.js';
 import './mask.js';
+import './menu.js';

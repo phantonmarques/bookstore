@@ -42,7 +42,7 @@
 @media(max-width: 768px) {
     .nav-aside {
         position: absolute;
-        right: -200%;
+        right: -100%;
         transition: right 0.3s ease;
     }
 
