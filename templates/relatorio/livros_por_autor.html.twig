@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Livros por autor</title>
+
+        <style>
+            @page {
+                margin: 28px;
+            }
+
+            body {
+                font-family: "Open Sans", sans-serif;
+                font-size: 10px;
+                color: #212529;
+            }
+
+            h1 {
+                margin: 0 0 6px;
+                font-size: 22px;
+            }
+
+            .descricao {
+                margin-bottom: 24px;
+                color: #555;
+            }
+
+            .autor {
+                margin-top: 24px;
+            }
+
+            h2 {
+                padding: 10px;
+                margin: 0;
+                background: #e9ecef;
+                font-size: 14px;
+                page-break-after: avoid;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            th,
+            td {
+                padding: 7px;
+                border: 1px solid #ddd;
+                vertical-align: top;
+                word-wrap: break-word;
+            }
+
+            th {
+                background: #212529;
+                color: #fff;
+                text-align: left;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+
+            .codigo { width: 6%; }
+            .titulo { width: 23%; }
+            .editora { width: 16%; }
+            .edicao { width: 7%; }
+            .ano { width: 7%; }
+            .assuntos { width: 28%; }
+
+            .preco {
+                width: 13%;
+                text-align: right;
+            }
+
+            .quantidade {
+                margin-top: 6px;
+                color: #555;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Relatório de livros por autor</h1>
+
+        <div class="descricao">
+            Gerado em {{ geradoEm|date('d/m/Y H:i', 'America/Sao_Paulo') }}.
+            Um livro com vários autores aparece no grupo de cada autor.
+        </div>
+
+        {% for autor in autores %}
+            <section class="autor">
+                <h2>{{ autor.nome }} — Código {{ autor.id }}</h2>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="codigo">Código</th>
+                        <th class="titulo">Livro</th>
+                        <th class="editora">Editora</th>
+                        <th class="edicao">Edição</th>
+                        <th class="ano">Ano</th>
+                        <th class="assuntos">Assuntos</th>
+                        <th class="preco">Preço</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for livro in autor.livros %}
+                        <tr>
+                            <td>{{ livro.id }}</td>
+                            <td>{{ livro.titulo }}</td>
+                            <td>{{ livro.editora }}</td>
+                            <td>{{ livro.edicao }}</td>
+                            <td>{{ livro.ano_publicacao }}</td>
+                            <td>{{ livro.assuntos }}</td>
+                            <td class="preco">
+                                R$ {{ livro.preco|number_format(2, ',', '.') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <p class="quantidade">
+                    Quantidade de livros deste autor:
+                    {{ autor.livros|length }}
+                </p>
+            </section>
+        {% else %}
+            <p>Nenhum livro vinculado a autores foi encontrado.</p>
+        {% endfor %}
+    </body>
+</html>

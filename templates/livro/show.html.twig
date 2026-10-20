@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livro{% endblock %}
+
+{% block body %}
+    <section class="container p-10">
+        <h1 class="fs-2xl">Detalhes do livro</h1>
+        <p class="fg-2 mb-0 pb-4">
+            Consulte as informações do cadastro.
+        </p>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-5">
+                <dl class="row mb-0">
+                    <div class="col-12 md:col-4 mb-4 md:mb-0">
+                        <dt class="fg-2 fw-normal mb-2">Código</dt>
+                        <dd class="fw-semibold mb-0">
+                            {{ livro.id }}
+                        </dd>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <dt class="fg-2 fw-normal mb-2">Título</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {{ livro.titulo }}
+                        </dd>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <dt class="fg-2 fw-normal mb-2">Editora</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {{ livro.editora }}
+                        </dd>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <dt class="fg-2 fw-normal mb-2">Edição</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {{ livro.edicao }}
+                        </dd>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <dt class="fg-2 fw-normal mb-2">Ano de publicação</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {{ livro.anoPublicacao }}
+                        </dd>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <dt class="fg-2 fw-normal mb-2">Preço</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {{ 'R$ ' ~ livro.preco|number_format(2, ',', '.') }}
+                        </dd>
+                    </div>
+
+                    <div class="col-12">
+                        <dt class="fg-2 fw-normal mb-2">Autores</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {% for autor in livro.autores %}
+                                <a href="{{ path('app_autor_show', {id: autor.id}) }}" class="d-block">
+                                    {{ autor.nome }}
+                                </a>
+                            {% else %}
+                                Nenhum autor cadastrado
+                            {% endfor %}
+                        </dd>
+                    </div>
+
+                    <div class="col-12">
+                        <dt class="fg-2 fw-normal mb-2">Assuntos</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {% for assunto in livro.assuntos %}
+                                <a href="{{ path('app_assunto_show', {id: assunto.id}) }}" class="d-block">
+                                    {{ assunto.descricao }}
+                                </a>
+                            {% else %}
+                                Nenhum assunto cadastrado
+                            {% endfor %}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="card-footer d-flex flex-wrap justify-content-between gap-3 p-4">
+                <a
+                    href="{{ path('app_livro_index') }}"
+                    class="btn-solid theme-secondary d-inline-flex align-items-center gap-2"
+                >
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    Voltar
+                </a>
+
+                <a
+                    href="{{ path('app_livro_edit', {id: livro.id}) }}"
+                    class="btn-solid theme-primary d-inline-flex align-items-center gap-2"
+                >
+                    <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                    Editar
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

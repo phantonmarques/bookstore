@@ -1,5 +1,13 @@
 {
     "type": "project",
+    "name": "bookstore/app",
+    "description": "A Symfony project for a testing bookstore application",
+    "authors": [
+        {
+            "name": "Daniel Cabredo",
+            "email": "damc.developer@gmail.com"
+        }
+    ],
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -10,6 +18,7 @@
         "doctrine/doctrine-bundle": "^3.3",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.7",
+        "dompdf/dompdf": "^3.1",
         "phpdocumentor/reflection-docblock": "^6.0",
         "phpstan/phpdoc-parser": "^2.3",
         "symfony/asset": "8.1.*",

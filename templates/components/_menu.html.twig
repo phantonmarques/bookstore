@@ -1,0 +1,70 @@
+{% set autores_ativo = app.current_route starts with 'app_autor_' %}
+{% set assuntos_ativo = app.current_route starts with 'app_assunto_' %}
+{% set livros_ativo = app.current_route starts with 'app_livro_' %}
+{% set home_ativo = app.current_route starts with 'app_home' %}
+
+<aside class="nav-aside d-flex flex-column flex-shrink-0 p-3 bg-1">
+    <ul class="nav flex-column align-items-start mb-auto">
+        <li class="nav-item">
+            <a
+                href="{{ path('app_home_index') }}"
+                class="nav-link {{ home_ativo ? 'active' : 'theme-inverse' }}"
+                {% if home_ativo %}aria-current="page"{% endif %}
+            >
+                <i class="bi bi-house pe-none me-2" aria-hidden="true"></i>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a
+                href="{{ path('app_autor_index') }}"
+                class="nav-link {{ autores_ativo ? 'active' : 'theme-inverse' }}"
+                {% if autores_ativo %}aria-current="page"{% endif %}
+            >
+                <i class="bi bi-person pe-none me-2" aria-hidden="true"></i>
+                Autores
+            </a>
+        </li>
+        <li>
+            <a
+                href="{{ path('app_assunto_index') }}"
+                class="nav-link {{ assuntos_ativo ? 'active' : 'theme-inverse' }}"
+                {% if assuntos_ativo %}aria-current="page"{% endif %}
+            >
+                <i class="bi bi-tags pe-none me-2" aria-hidden="true"></i>
+                Assuntos
+            </a>
+        </li>
+        <li>
+            <a
+               href="{{ path('app_livro_index') }}"
+               class="nav-link {{ livros_ativo ? 'active' : 'theme-inverse' }}"
+               {% if livros_ativo %}aria-current="page"{% endif %}
+            >
+                <i class="bi bi-book pe-none me-2" aria-hidden="true"></i>
+                Livros
+            </a>
+        </li>
+    </ul>
+
+    <hr />
+
+    <div>
+        <a
+            class="d-flex align-items-center fg-body text-decoration-none"
+            href="https://github.com/phantonmarques/bookstore"
+            role="button"
+            data-bs-toggle="menu"
+            aria-expanded="false"
+        >
+            <img
+                src="https://avatars.githubusercontent.com/u/19207412"
+                alt="Daniel Marques"
+                width="32"
+                height="32"
+                class="rounded-circle me-2"
+            />
+            <strong>Daniel Marques</strong>
+        </a>
+    </div>
+</aside>

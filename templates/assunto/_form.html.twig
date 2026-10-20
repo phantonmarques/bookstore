@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="h5 mb-0">
+                {{ titulo|default('Dados do assunto') }}
+            </h2>
+        </div>
+
+        <div class="card-body">
+            <div class="form-field">
+                {{ form_label(form.descricao, 'Descrição') }}
+
+                {{ form_widget(form.descricao, {
+                    attr: {
+                        class: 'form-control',
+                        placeholder: 'Informe o descricao do assunto',
+                        maxlength: 20
+                    }
+                }) }}
+
+                {{ form_errors(form.descricao) }}
+            </div>
+
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="card-footer d-flex flex-wrap justify-content-between gap-3 p-4">
+            <a
+                href="{{ path('app_assunto_index') }}"
+                class="btn-solid theme-secondary d-inline-flex align-items-center gap-2"
+            >
+                <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                Voltar
+            </a>
+
+            <button type="submit" class="btn-solid theme-primary d-inline-flex align-items-center gap-2">
+                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+
+                {{ button_label|default('Cadastrar') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

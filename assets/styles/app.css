@@ -1,3 +1,51 @@
+:root {
+    --primary-color: #333;
+    --background-color: #ffff;
+    --font: 'Poppins';
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scrollbar-gutter: auto !important;
+}
+
 body {
-    background-color: skyblue;
+    font-family: var(--font), serif;
+    background-color: var(--background-color);
+    margin: 0;
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/**
+ * Form
+ */
+
+[id*="_error"] {
+    color: #D93025;
+    font-size: .75rem;
 }

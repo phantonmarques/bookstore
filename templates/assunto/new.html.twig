@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Novo Assunto{% endblock %}
+
+{% block body %}
+    <section class="container p-5 md:p-10">
+        <h1 class="fs-2xl pb-4">Cadastrar novo assunto</h1>
+
+        {{ include('assunto/_form.html.twig') }}
+    </section>
+{% endblock %}

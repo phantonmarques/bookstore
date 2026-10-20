@@ -1,0 +1,150 @@
+{{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="h5 mb-0">
+                {{ titulo|default('Dados do livro') }}
+            </h2>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-5">
+                <div class="col-12 md:col-6">
+                    <div class="form-field">
+                        {{ form_label(form.titulo, 'Título') }}
+
+                        {{ form_widget(form.titulo, {
+                            attr: {
+                                class: 'form-control',
+                                placeholder: 'Informe o título do livro',
+                                maxlength: 40
+                            }
+                        }) }}
+
+                        {{ form_errors(form.titulo) }}
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6">
+                    <div class="form-field">
+                        {{ form_label(form.editora, 'Editora') }}
+
+                        {{ form_widget(form.editora, {
+                            attr: {
+                                class: 'form-control',
+                                placeholder: 'Informe a editora',
+                                maxlength: 40
+                            }
+                        }) }}
+
+                        {{ form_errors(form.editora) }}
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-4">
+                    <div class="form-field">
+                        {{ form_label(form.edicao, 'Edição') }}
+
+                        {{ form_widget(form.edicao, {
+                            attr: {
+                                class: 'form-control',
+                                placeholder: 'Informe a edição',
+                                min: 1,
+                                step: 1
+                            }
+                        }) }}
+
+                        {{ form_errors(form.edicao) }}
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-4">
+                    <div class="form-field">
+                        {{ form_label(form.anoPublicacao, 'Ano de publicação') }}
+
+                        {{ form_widget(form.anoPublicacao, {
+                            attr: {
+                                class: 'form-control',
+                                placeholder: 'Informe o ano de publicação',
+                                maxlength: 4,
+                                inputmode: 'numeric',
+                                pattern: '[0-9]{4}',
+                                'data-somente-numeros': 'true'
+                            }
+                        }) }}
+
+
+
+                        {{ form_errors(form.anoPublicacao) }}
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-4">
+                    <div class="form-field">
+                        {{ form_label(form.preco, 'Preço') }}
+
+                        {{ form_widget(form.preco, {
+                            attr: {
+                                class: 'form-control',
+                                placeholder: '0,00',
+                                inputmode: 'decimal',
+                                'data-mascara-preco': 'true'
+                            }
+                        }) }}
+
+                        {{ form_errors(form.preco) }}
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6">
+                    <div class="form-field">
+                        {{ form_label(form.autores, 'Autores') }}
+
+                        {{ form_widget(form.autores, {
+                            attr: {
+                                class: 'form-control',
+                                size: 5,
+                                'aria-describedby': 'livro_autores_ajuda'
+                            }
+                        }) }}
+
+                        {{ form_errors(form.autores) }}
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6">
+                    <div class="form-field">
+                        {{ form_label(form.assuntos, 'Assuntos') }}
+
+                        {{ form_widget(form.assuntos, {
+                            attr: {
+                                class: 'form-control',
+                                size: 5,
+                                'aria-describedby': 'livro_assuntos_ajuda'
+                            }
+                        }) }}
+
+                        {{ form_errors(form.assuntos) }}
+                    </div>
+                </div>
+            </div>
+
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="card-footer d-flex flex-wrap justify-content-between gap-3 p-4">
+            <a
+                href="{{ path('app_livro_index') }}"
+                class="btn-solid theme-secondary d-inline-flex align-items-center gap-2"
+            >
+                <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                Voltar
+            </a>
+
+            <button type="submit" class="btn-solid theme-primary d-inline-flex align-items-center gap-2">
+                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+
+                {{ button_label|default('Cadastrar') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Autor{% endblock %}
+
+{% block body %}
+    <section class="container p-10">
+        <h1 class="fs-2xl pb-4">Atualizar autor</h1>
+
+        {{ include('autor/_form.html.twig', {'button_label': 'Salvar'}) }}
+    </section>
+{% endblock %}

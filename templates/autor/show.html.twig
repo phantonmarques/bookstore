@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Autor{% endblock %}
+
+{% block body %}
+    <section class="container p-10">
+        <h1 class="fs-2xl">Detalhes do autor</h1>
+        <p class="fg-2 mb-0 pb-4">
+            Consulte as informações do cadastro.
+        </p>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-5">
+                <dl class="row mb-0">
+                    <div class="col-12 md:col-4 mb-4 md:mb-0">
+                        <dt class="fg-2 fw-normal mb-2">Código</dt>
+                        <dd class="fw-semibold mb-0">
+                            {{ autor.id }}
+                        </dd>
+                    </div>
+
+                    <div class="col-12 md:col-8">
+                        <dt class="fg-2 fw-normal mb-2">Nome do autor</dt>
+                        <dd class="fw-semibold text-break mb-0">
+                            {{ autor.nome }}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="card-footer d-flex flex-wrap justify-content-between gap-3 p-4">
+                <a
+                    href="{{ path('app_autor_index') }}"
+                    class="btn-solid theme-secondary d-inline-flex align-items-center gap-2"
+                >
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    Voltar
+                </a>
+
+                <a
+                    href="{{ path('app_autor_edit', {id: autor.id}) }}"
+                    class="btn-solid theme-primary d-inline-flex align-items-center gap-2"
+                >
+                    <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                    Editar
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

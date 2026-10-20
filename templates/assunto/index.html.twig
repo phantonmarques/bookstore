@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista de Assuntos{% endblock %}
+
+{% block body %}
+    <section class="container p-10 md:p-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center w-100 pb-4">
+            <h1 class="fs-2xl pb-4">Lista de Assuntos</h1>
+            <a href="{{ path('app_assunto_new') }}" class="btn-solid theme-primary">Novo Assunto <i class="bi bi-plus" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="border rounded-6 overflow-hidden shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="bg-black fg-white">ID</th>
+                            <th scope="col" class="bg-black fg-white">Descrição</th>
+                            <th scope="col" class="bg-black fg-white">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for assunto in assuntos %}
+                        <tr>
+                            <td>{{ assunto.id }}</td>
+                            <td>{{ assunto.descricao }}</td>
+                            <td>
+                                <div class="actions-list d-flex justify-content-start align-items-center gap-4">
+                                    <a
+                                        href="{{ path('app_assunto_show', {'id': assunto.id}) }}"
+                                        class="title-tooltip"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom"
+                                        data-bs-title="Visualizar"
+                                    ><i class="bi bi-eye" aria-hidden="true"></i></a>
+                                    <a
+                                        href="{{ path('app_assunto_edit', {'id': assunto.id}) }}"
+                                        class="title-tooltip"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom"
+                                        data-bs-title="Editar"
+                                    ><i class="bi bi-pencil-square" aria-hidden="true"></i></a>
+                                    <form method="post" action="{{ path('app_assunto_delete', {'id': assunto.id}) }}" onsubmit="return confirm('Deseja continuar a exclusão?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assunto.id) }}">
+                                        <button value="Excluir" class="title-tooltip border-0 p-0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Excluir">
+                                            <i class="bi bi-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">Nenhum assunto encontrado.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

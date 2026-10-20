@@ -1,0 +1,152 @@
+/**
+ * Header
+ */
+
+.header {
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+}
+
+.header-logo {
+    font-size: 1rem;
+}
+
+.dropdown-toggle i {
+    display: none;
+}
+
+.dropdown-toggle i,
+.header-logo {
+    color: var(--background-color);
+}
+
+@media(max-width: 768px) {
+    .dropdown-toggle i {
+        display: block;
+        font-size: 1.5rem;
+    }
+}
+
+/**
+ * Navigation
+ */
+
+.nav-link.active,
+.nav-link:active {
+    background: var(--bs-inverse-bg-muted);
+}
+
+@media(max-width: 768px) {
+    .nav-aside {
+        position: absolute;
+        right: -200%;
+        transition: right 0.3s ease;
+    }
+
+    .nav-aside.active {
+        right: 0;
+    }
+}
+
+/**
+ * Content
+ */
+
+.main {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    flex: 1;
+    min-width: 0;
+}
+
+.actions-list a {
+    color: var(--primary-color);
+}
+
+.title-tooltip:hover {
+    opacity: .75;
+}
+
+@media(max-width: 768px) {
+    .main {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*
+ * Flash Messages
+ */
+
+.flash-container {
+    position: absolute;
+    right: 20px;
+    bottom: 40px;
+    z-index: 9;
+    display: grid;
+    width: min(360px, calc(100% - 32px));
+    pointer-events: none;
+}
+
+.flash-message {
+    --flash-color: #0d6efd;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px;
+    color: #212529;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid var(--flash-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgb(0 0 0 / 14%);
+    pointer-events: auto;
+    transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.flash-success { --flash-color: #198754; }
+.flash-danger  { --flash-color: #dc3545; }
+.flash-warning { --flash-color: #a16207; }
+
+.flash-content {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.flash-content strong {
+    color: var(--flash-color);
+}
+
+.flash-content p {
+    margin: 6px 0 0;
+    font-size: 0.9rem;
+}
+
+.flash-close {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--primary-color);
+    font: inherit;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.flash-close:hover {
+    color: #212529;
+}
+
+.flash-message.is-closing {
+    opacity: 0;
+    transform: translateY(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .flash-message {
+        transition: none;
+    }
+}

@@ -1,0 +1,35 @@
+{% set titulos = {
+    success: 'Sucesso',
+    danger: 'Erro',
+    warning: 'Atenção',
+    info: 'Informação'
+} %}
+
+<div class="flash-container">
+    {% for tipo, mensagens in app.flashes %}
+        {% set variante = tipo == 'error'
+            ? 'danger'
+            : (tipo in ['success', 'danger', 'warning'] ? tipo : 'info')
+        %}
+
+        {% for mensagem in mensagens %}
+            <div
+                class="flash-message flash-{{ variante }}"
+                data-flash
+                role="{{ variante == 'danger' ? 'alert' : 'status' }}"
+            >
+                <div class="flash-content">
+                    <strong>{{ titulos[variante] }}</strong>
+                    <p>{{ mensagem }}</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="flash-close"
+                    data-flash-close
+                    aria-label="Fechar notificação"
+                >×</button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>

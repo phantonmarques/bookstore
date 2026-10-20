@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Novo Autor{% endblock %}
+
+{% block body %}
+    <section class="container p-5 md:p-10">
+        <h1 class="fs-2xl pb-4">Cadastrar novo autor</h1>
+
+        {{ include('autor/_form.html.twig') }}
+    </section>
+{% endblock %}
