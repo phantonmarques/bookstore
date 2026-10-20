@@ -21,6 +21,8 @@ composer install
 docker compose up -d --build
 docker compose exec php php bin/console importmap:install
 docker compose exec php php bin/console doctrine:migrations:migrate
+docker-compose exec php php bin/console cache:clear
+docker-compose exec php php bin/console asset-map:compile
 ```
 
 Acesse: http://localhost:8080/
