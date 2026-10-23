@@ -32,21 +32,21 @@ final class Version20261020123944 extends AbstractMigration
                 livro."Preco" AS preco,
                 COALESCE(temas.assuntos, 'Sem assunto') AS assuntos
             FROM "Autor" autor
-            INNER JOIN "Livro_Autor" vinculo
-                ON vinculo."Autor_CodAu" = autor."CodAu"
+            INNER JOIN "Livro_Autor" livro_autor
+                ON livro_autor."Autor_CodAu" = autor."CodAu"
             INNER JOIN "Livro" livro
-                ON livro."Codl" = vinculo."Livro_Codl"
+                ON livro."Codl" = livro_autor."Livro_Codl"
             LEFT JOIN (
                 SELECT
-                    vinculo_assunto."Livro_Codl" AS livro_id,
+                    livro_assunto."Livro_Codl" AS livro_id,
                     STRING_AGG(
                         assunto."Descricao" || ' (#' || assunto."codAs"::text || ')',
                         ', ' ORDER BY assunto."Descricao", assunto."codAs"
                     ) AS assuntos
-                FROM "Livro_Assunto" vinculo_assunto
+                FROM "Livro_Assunto" livro_assunto
                 INNER JOIN "Assunto" assunto
-                    ON assunto."codAs" = vinculo_assunto."Assunto_codAs"
-                GROUP BY vinculo_assunto."Livro_Codl"
+                    ON assunto."codAs" = livro_assunto."Assunto_codAs"
+                GROUP BY livro_assunto."Livro_Codl"
             ) temas ON temas.livro_id = livro."Codl"
             SQL);
     }

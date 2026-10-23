@@ -7,6 +7,12 @@ services:
 
     working_dir: /var/www/html
 
+    command: >
+      sh -c "mkdir -p var/cache var/log
+      && chown -R www-data:www-data var
+      && chmod -R u+rwX var
+      && exec php-fpm"
+
     env_file:
       - .env
 

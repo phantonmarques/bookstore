@@ -14,7 +14,7 @@ final class Version20261018144017 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Cria as tabelas de Assunto, Autor, Livro e as tabelas de vinculo muitos para muitos Livro_Assunto e Livro_Autor.';
     }
 
     public function up(Schema $schema): void

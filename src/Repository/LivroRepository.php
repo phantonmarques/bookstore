@@ -17,6 +17,15 @@ class LivroRepository extends ServiceEntityRepository implements LivroRepository
         parent::__construct($registry, Livro::class);
     }
 
+    public function buscarPorTitulo(string $titulo): ?Livro
+    {
+        return $this->createQueryBuilder('livro')
+            ->where('livro.titulo = :titulo')
+            ->setParameter('titulo', $titulo)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function listar(): array
     {
         return $this->createQueryBuilder('livro')
@@ -24,7 +33,7 @@ class LivroRepository extends ServiceEntityRepository implements LivroRepository
             ->addSelect('autor')
             ->leftJoin('livro.assuntos', 'assunto')
             ->addSelect('assunto')
-            ->orderBy('livro.id', 'ASC')
+            ->orderBy('livro.id', \SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }

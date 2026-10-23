@@ -4,28 +4,23 @@ namespace App\Tests\Controller;
 
 use App\Entity\Autor;
 use App\Repository\AutorRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class AutorControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
-    private EntityManagerInterface $manager;
     private AutorRepository $autorRepository;
     private string $path = '/autor/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $this->manager = static::getContainer()->get('doctrine')->getManager();
         $this->autorRepository = static::getContainer()->get(AutorRepository::class);
 
         foreach ($this->autorRepository->listar() as $autor) {
-            $this->manager->remove($autor);
+            $this->autorRepository->excluir($autor);
         }
-
-        $this->manager->flush();
     }
 
     public function testIndex(): void
@@ -36,8 +31,8 @@ final class AutorControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
         self::assertPageTitleContains('Lista de Autores');
 
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first()->text());
+        self::assertSame('Lista de Autores', $crawler->filter('section h1')->first()->text());
+        self::assertSame('Novo Autor', $crawler->filter('section a')->first()->text());
     }
 
     public function testNew(): void
@@ -57,12 +52,12 @@ final class AutorControllerTest extends WebTestCase
 
     public function testShow(): void
     {
-        $fixture = new Autor();
-        $fixture->setNome('Teste Autor 1');
+        $autor = new Autor();
+        $autor->setNome('Teste Autor 1');
 
-        $this->autorRepository->salvar($fixture);
+        $this->autorRepository->salvar($autor);
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
+        $this->client->request('GET', sprintf('%s%s', $this->path, $autor->getId()));
 
         self::assertResponseStatusCodeSame(200);
         self::assertPageTitleContains('Autor');
@@ -70,12 +65,12 @@ final class AutorControllerTest extends WebTestCase
 
     public function testEdit(): void
     {
-        $fixture = new Autor();
-        $fixture->setNome('Teste Autor 1');
+        $autor = new Autor();
+        $autor->setNome('Teste Autor 1');
 
-        $this->autorRepository->salvar($fixture);
+        $this->autorRepository->salvar($autor);
 
-        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
+        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $autor->getId()));
 
         $this->client->submitForm('Salvar', [
             'autor[nome]' => 'Teste Autor 1 Editado',
@@ -90,15 +85,15 @@ final class AutorControllerTest extends WebTestCase
 
     public function testRemove(): void
     {
-        $fixture = new Autor();
-        $fixture->setNome('Teste Autor 1');
+        $autor = new Autor();
+        $autor->setNome('Teste Autor 1');
 
-        $this->autorRepository->salvar($fixture);
+        $this->autorRepository->salvar($autor);
 
         $crawler = $this->client->request('GET', rtrim($this->path, '/'));
 
         $form = $crawler
-            ->filter(sprintf('form[action="/autor/%s"]', $fixture->getId()))
+            ->filter(sprintf('form[action="/autor/%s"]', $autor->getId()))
             ->form();
 
         $this->client->submit($form);

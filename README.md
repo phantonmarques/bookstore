@@ -8,21 +8,14 @@ Desenvolvida com PHP, Symfony, Doctrine, Twig, Bootstrap e Dompdf. A aplicação
 
 Requisitos: Docker Compose e Composer com uma versão de PHP compatível com o projeto.
 
-Configure a conexão no `.env`:
-
-```dotenv
-DATABASE_URL="postgresql://postgres:postgres123@database:5432/bookstore?serverVersion=16&charset=utf8"
-```
+O arquivo `.env` ficou fora do .gitignore para facilitar a configuração.
 
 As credenciais devem corresponder às configuradas no Compose. Depois, execute na raiz do projeto:
 
 ```bash
-composer install
-docker compose up -d --build
-docker compose exec php php bin/console importmap:install
-docker compose exec php php bin/console doctrine:migrations:migrate
-docker-compose exec php php bin/console cache:clear
-docker-compose exec php php bin/console asset-map:compile
+composer install && docker compose up -d --build
+docker compose exec php php bin/console importmap:install && docker compose exec php php bin/console doctrine:migrations:migrate && docker-compose exec php php bin/console cache:clear && docker-compose exec php php bin/console asset-map:compile
+
 ```
 
 Acesse: http://localhost:8080/

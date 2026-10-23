@@ -7,14 +7,16 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center w-100 pb-4">
             <h1 class="fs-2xl pb-4">Lista de Livros</h1>
             <div class="d-flex flex-wrap gap-5">
-                <a
-                    href="{{ path('app_relatorio_livros_por_autor') }}"
-                    data-turbo="false"
-                    class="btn-solid theme-secondary d-inline-flex align-items-center gap-2"
-                >
-                    <i class="bi bi-download" aria-hidden="true"></i>
-                    Baixar relatório por autor
-                </a>
+                {% if livros | length > 0 %}
+                    <a
+                        href="{{ path('app_relatorio_livros_por_autor') }}"
+                        data-turbo="false"
+                        class="btn-solid theme-secondary d-inline-flex align-items-center gap-2"
+                    >
+                        <i class="bi bi-download" aria-hidden="true"></i>
+                        Baixar relatório por autor
+                    </a>
+                {% endif %}
                 <a href="{{ path('app_livro_new') }}" class="btn-solid theme-primary">Novo Livro <i class="bi bi-plus" aria-hidden="true"></i></a>
             </div>
         </div>
@@ -81,7 +83,7 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="3">Nenhum livro encontrado.</td>
+                            <td class="text-center" colspan="9">Nenhum livro encontrado.</td>
                         </tr>
                     {% endfor %}
                     </tbody>

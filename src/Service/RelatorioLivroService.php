@@ -18,38 +18,43 @@ final class RelatorioLivroService
 
     public function gerar(): string
     {
-        $autores = [];
+        try {
+            $autores = [];
 
-        foreach ($this->repository->listarPorAutor() as $registro) {
-            $autorId = (int) $registro['autor_id'];
+            foreach ($this->repository->listarPorAutor() ?? [] as $registro) {
+                $autorId = (int) $registro['autor_id'];
 
-            if (!isset($autores[$autorId])) {
-                $autores[$autorId] = [
-                    'id' => $autorId,
-                    'nome' => $registro['autor_nome'],
-                    'livros' => [],
+                if (!isset($autores[$autorId])) {
+                    $autores[$autorId] = [
+                        'id' => $autorId,
+                        'nome' => $registro['autor_nome'],
+                        'livros' => [],
+                    ];
+                }
+
+                $autores[$autorId]['livros'][] = [
+                    'id' => $registro['livro_id'],
+                    'titulo' => $registro['titulo'],
+                    'editora' => $registro['editora'],
+                    'edicao' => $registro['edicao'],
+                    'ano_publicacao' => $registro['ano_publicacao'],
+                    'preco' => $registro['preco'],
+                    'assuntos' => $registro['assuntos'],
                 ];
             }
 
-            $autores[$autorId]['livros'][] = [
-                'id' => $registro['livro_id'],
-                'titulo' => $registro['titulo'],
-                'editora' => $registro['editora'],
-                'edicao' => $registro['edicao'],
-                'ano_publicacao' => $registro['ano_publicacao'],
-                'preco' => $registro['preco'],
-                'assuntos' => $registro['assuntos'],
-            ];
+            $html = $this->twig->render(
+                'relatorio/livros_por_autor.html.twig',
+                [
+                    'autores' => array_values($autores),
+                    'geradoEm' => date('d/m/Y H:i:s'),
+                ],
+            );
+
+            return $this->geradorPdf->gerar($html);
+
+        } catch (\Throwable $e) {
+            throw new \RuntimeException('Erro ao gerar o relatório de livros por autor.', 0, $e);
         }
-
-        $html = $this->twig->render(
-            'relatorio/livros_por_autor.html.twig',
-            [
-                'autores' => array_values($autores),
-                'geradoEm' => new \DateTimeImmutable(),
-            ],
-        );
-
-        return $this->geradorPdf->gerar($html);
     }
 }

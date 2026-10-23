@@ -4,28 +4,23 @@ namespace App\Tests\Controller;
 
 use App\Entity\Assunto;
 use App\Repository\AssuntoRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class AssuntoControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
-    private EntityManagerInterface $manager;
     private AssuntoRepository $assuntoRepository;
     private string $path = '/assunto/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $this->manager = static::getContainer()->get('doctrine')->getManager();
         $this->assuntoRepository = static::getContainer()->get(AssuntoRepository::class);
 
         foreach ($this->assuntoRepository->listar() as $assunto) {
-            $this->manager->remove($assunto);
+            $this->assuntoRepository->excluir($assunto);
         }
-
-        $this->manager->flush();
     }
 
     public function testIndex(): void
@@ -36,8 +31,8 @@ final class AssuntoControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
         self::assertPageTitleContains('Lista de Assuntos');
 
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first()->text());
+        self::assertSame('Lista de Assuntos', $crawler->filter('section h1')->first()->text());
+        self::assertSame('Novo Assunto', $crawler->filter('section a')->first()->text());
     }
 
     public function testNew(): void
@@ -57,12 +52,12 @@ final class AssuntoControllerTest extends WebTestCase
 
     public function testShow(): void
     {
-        $fixture = new Assunto();
-        $fixture->setDescricao('Assunto Teste 1');
+        $assunto = new Assunto();
+        $assunto->setDescricao('Assunto Teste 1');
 
-        $this->assuntoRepository->salvar($fixture);
+        $this->assuntoRepository->salvar($assunto);
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
+        $this->client->request('GET', sprintf('%s%s', $this->path, $assunto->getId()));
 
         self::assertResponseStatusCodeSame(200);
         self::assertPageTitleContains('Assunto');
@@ -70,12 +65,12 @@ final class AssuntoControllerTest extends WebTestCase
 
     public function testEdit(): void
     {
-        $fixture = new Assunto();
-        $fixture->setDescricao('Assunto Teste 1');
+        $assunto = new Assunto();
+        $assunto->setDescricao('Assunto Teste 1');
 
-        $this->assuntoRepository->salvar($fixture);
+        $this->assuntoRepository->salvar($assunto);
 
-        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
+        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $assunto->getId()));
 
         $this->client->submitForm('Salvar', [
             'assunto[descricao]' => 'Assunto Modificado 1',
@@ -90,10 +85,10 @@ final class AssuntoControllerTest extends WebTestCase
 
     public function testRemove(): void
     {
-        $fixture = new Assunto();
-        $fixture->setDescricao('Assunto Teste 1');
+        $assunto = new Assunto();
+        $assunto->setDescricao('Assunto Teste 1');
 
-        $this->assuntoRepository->salvar($fixture);
+        $this->assuntoRepository->salvar($assunto);
 
         $this->client->request('GET', rtrim($this->path, '/'));
         $this->client->submitForm('Excluir');

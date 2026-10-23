@@ -6,6 +6,9 @@ use App\Entity\Livro;
 
 interface LivroRepositoryInterface
 {
+    /** @return Livro|null */
+    public function buscarPorTitulo(string $titulo): ?Livro;
+
     /** @return Livro[] */
     public function listar(): array;
 
