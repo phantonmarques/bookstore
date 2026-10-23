@@ -48,7 +48,7 @@ class LivroControllerTest extends WebTestCase
         self::assertPageTitleContains('Lista de Livros');
 
         self::assertSame('Lista de Livros', $crawler->filter('section h1')->first()->text());
-        self::assertSame('Baixar relatório por autor', $crawler->filter('section a')->first()->text());
+        self::assertSame('Novo Livro', $crawler->filter('section a')->first()->text());
     }
 
     public function testNew(): void
